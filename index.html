@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arvin Abedi</title>
+<meta name="description" content="Arvin Abedi, product builder. Turns a team's workflow problem into a shipped, adopted product: the Ronix Tool Hub and its eight tools, Content OS, a packaging workflow system, a distributor asset portal, a 193 TB archive re-architecture, and Jira pipeline analytics.">
+<meta name="color-scheme" content="dark light">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Vazirmatn:wght@500&display=swap">
+<script>
+  (function(){try{var t=localStorage.getItem("arvin.theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}})();
+</script>
+<style>
+/* =============== tokens (dark-first) =============== */
+:root{
+  --bg:#07090F; --bg-2:#0D1019; --bg-3:#131726;
+  --ink:#F2F4FA; --ink-2:#B4BBCC; --mute:#7D86A0; --faint:#4A5370;
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.22);
+  --glass:rgba(255,255,255,.045); --glass-2:rgba(255,255,255,.085); --glass-hi:rgba(255,255,255,.22);
+  --shadow:0 40px 80px -40px rgba(0,0,0,.85);
+  --red:#FF3A41; --red-2:#FF6B6F; --red-deep:#C8102E; --red-soft:rgba(255,58,65,.14);
+  --indigo:#8A90FF; --indigo-soft:rgba(138,144,255,.14);
+  --cyan:#5EE7F5;
+  --ok:#52C98A; --warn:#F0B35A;
+  --aur-a:rgba(225,37,45,.42); --aur-b:rgba(75,82,217,.40); --aur-c:rgba(94,231,245,.16);
+  --grid:rgba(255,255,255,.035);
+  --frame:rgba(255,255,255,.14);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#E9ECF3; --bg-2:#F4F6FA; --bg-3:#FFFFFF;
+    --ink:#0F1220; --ink-2:#3A4257; --mute:#67708A; --faint:#A3ABBF;
+    --line:rgba(15,18,32,.12); --line-2:rgba(15,18,32,.24);
+    --glass:rgba(255,255,255,.55); --glass-2:rgba(255,255,255,.80); --glass-hi:rgba(255,255,255,1);
+    --shadow:0 40px 80px -46px rgba(15,18,32,.45);
+    --red:#D81E27; --red-2:#E8474E; --red-deep:#B00E16; --red-soft:rgba(216,30,39,.10);
+    --indigo:#4B52D9; --indigo-soft:rgba(75,82,217,.12);
+    --cyan:#0E9FB0;
+    --ok:#1E7A4A; --warn:#A06A0B;
+    --aur-a:rgba(225,37,45,.22); --aur-b:rgba(75,82,217,.20); --aur-c:rgba(94,231,245,.18);
+    --grid:rgba(15,18,32,.06);
+    --frame:rgba(15,18,32,.14);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#E9ECF3; --bg-2:#F4F6FA; --bg-3:#FFFFFF;
+  --ink:#0F1220; --ink-2:#3A4257; --mute:#67708A; --faint:#A3ABBF;
+  --line:rgba(15,18,32,.12); --line-2:rgba(15,18,32,.24);
+  --glass:rgba(255,255,255,.55); --glass-2:rgba(255,255,255,.80); --glass-hi:rgba(255,255,255,1);
+  --shadow:0 40px 80px -46px rgba(15,18,32,.45);
+  --red:#D81E27; --red-2:#E8474E; --red-deep:#B00E16; --red-soft:rgba(216,30,39,.10);
+  --indigo:#4B52D9; --indigo-soft:rgba(75,82,217,.12);
+  --cyan:#0E9FB0;
+  --ok:#1E7A4A; --warn:#A06A0B;
+  --aur-a:rgba(225,37,45,.22); --aur-b:rgba(75,82,217,.20); --aur-c:rgba(94,231,245,.18);
+  --grid:rgba(15,18,32,.06);
+  --frame:rgba(15,18,32,.14);
+  color-scheme:light;
+}
+
+/* =============== base =============== */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:Figtree,-apple-system,"Segoe UI",Roboto,sans-serif; font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased; padding-inline:clamp(16px,4vw,56px); padding-block:0 110px; position:relative; overflow-x:clip}
+h1,h2,h3,h4{font-family:Syne,Figtree,sans-serif; margin:0; letter-spacing:-.02em; text-wrap:balance}
+p{margin:0} a{color:inherit} img{max-width:100%; height:auto; display:block}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,monospace}
+.fa{font-family:Vazirmatn,Figtree,sans-serif}
+.wrap{max-width:1280px; margin:0 auto}
+:focus-visible{outline:2px solid var(--cyan); outline-offset:3px; border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important; scroll-behavior:auto!important}}
+
+/* =============== ground: aurora + drafting grid =============== */
+.ground{position:fixed; inset:0; z-index:-2; pointer-events:none; overflow:hidden; background:var(--bg)}
+.ground::after{content:""; position:absolute; inset:0; background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px); background-size:72px 72px; mask:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%); -webkit-mask:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%)}
+.blob{position:absolute; border-radius:50%; filter:blur(110px); will-change:transform}
+.blob.a{width:70vw; height:70vw; left:-18vw; top:-30vh; background:radial-gradient(closest-side,var(--aur-a),transparent 72%); animation:fa 40s ease-in-out infinite alternate}
+.blob.b{width:64vw; height:64vw; right:-20vw; top:5vh; background:radial-gradient(closest-side,var(--aur-b),transparent 72%); animation:fb 50s ease-in-out infinite alternate}
+.blob.c{width:36vw; height:36vw; left:38vw; top:60vh; background:radial-gradient(closest-side,var(--aur-c),transparent 72%); animation:fa 58s ease-in-out infinite alternate-reverse}
+@keyframes fa{to{transform:translate(10vw,14vh) scale(1.12)}}
+@keyframes fb{to{transform:translate(-12vw,-10vh) scale(1.15)}}
+.grain{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.4; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .6 0 0 0 0 .7 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* =============== glass =============== */
+.glass{position:relative; border-radius:26px; border:1px solid var(--line); background:linear-gradient(165deg,var(--glass-2),var(--glass) 55%); -webkit-backdrop-filter:blur(24px) saturate(160%); backdrop-filter:blur(24px) saturate(160%); box-shadow:var(--shadow), inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 rgba(255,255,255,.05); overflow:hidden; isolation:isolate}
+@media (prefers-reduced-transparency:reduce){.glass{-webkit-backdrop-filter:none; backdrop-filter:none; background:var(--bg-2)}}
+:root[data-theme="light"] .glass{-webkit-backdrop-filter:blur(24px) saturate(130%); backdrop-filter:blur(24px) saturate(130%)}
+.glass::before{content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none; z-index:0; background:radial-gradient(520px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.10),transparent 60%); opacity:0; transition:opacity .4s}
+.glass:hover::before{opacity:1}
+.glass>*{position:relative; z-index:1}
+
+/* =============== nav =============== */
+.nav{position:sticky; top:14px; z-index:30; margin:14px auto 0; max-width:1280px; display:flex; align-items:center; gap:14px; padding:9px 10px 9px 18px; border-radius:999px}
+.nav .brand{font-family:Syne,sans-serif; font-weight:800; letter-spacing:-.01em; text-decoration:none; font-size:1rem; white-space:nowrap; display:flex; align-items:center; gap:10px}
+.nav .brand i{width:9px; height:9px; border-radius:50%; background:var(--red); box-shadow:0 0 16px var(--red)}
+.nav ul{list-style:none; margin:0 0 0 auto; padding:0; display:flex; gap:2px}
+.nav ul a{text-decoration:none; color:var(--ink-2); font-size:.86rem; padding:8px 12px; border-radius:999px; transition:background .2s,color .2s}
+.nav ul a:hover{background:var(--glass-2); color:var(--ink)}
+.nav .cta{text-decoration:none; font-size:.86rem; font-weight:600; padding:9px 16px; border-radius:999px; background:var(--ink); color:var(--bg); white-space:nowrap}
+.theme{appearance:none; border:1px solid var(--line); background:var(--glass-2); color:var(--ink); width:38px; height:38px; border-radius:50%; cursor:pointer; display:grid; place-items:center; flex:none}
+.theme svg{width:17px; height:17px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.theme .sun{display:none}
+:root[data-theme="light"] .theme .sun{display:block} :root[data-theme="light"] .theme .moon{display:none}
+@media (prefers-color-scheme:light){ :root:not([data-theme="dark"]) .theme .sun{display:block} :root:not([data-theme="dark"]) .theme .moon{display:none} }
+@media (max-width:820px){ .nav ul{display:none} }
+@media (max-width:340px){ .nav .cta{display:none} }
+
+/* =============== hero =============== */
+.hero{padding-block:clamp(56px,8vw,104px) clamp(30px,5vw,60px)}
+.kicker{font-family:"JetBrains Mono",monospace; font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; color:var(--mute); display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.kicker b{color:var(--red); font-weight:600}
+.kicker .pill{border:1px solid var(--line); border-radius:999px; padding:4px 10px; color:var(--ink-2)}
+.hero h1{margin-top:24px; font-weight:800; font-size:clamp(3rem,9vw,7.6rem); line-height:.9; letter-spacing:-.045em; text-transform:uppercase}
+.hero h1 .ln{display:block; overflow:hidden}
+.hero h1 .ln span{display:block; animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .ln:nth-child(2) span{animation-delay:.08s} .hero h1 .ln:nth-child(3) span{animation-delay:.16s}
+@keyframes rise{from{transform:translateY(102%)} to{transform:translateY(0)}}
+.hero h1 .solo{color:var(--red); -webkit-text-stroke:0}
+.hero h1 .weeks{color:transparent; -webkit-text-stroke:2px var(--ink); text-stroke:2px var(--ink)}
+@media (max-width:600px){ .hero h1 .weeks{-webkit-text-stroke-width:1.2px} }
+.hero .row{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr); gap:clamp(24px,4vw,64px); align-items:end; margin-top:clamp(28px,4vw,48px)}
+.hero .lede{font-size:clamp(1.1rem,1.6vw,1.35rem); color:var(--ink-2); max-width:56ch; text-wrap:pretty; font-weight:300; line-height:1.5}
+.hero .lede strong{color:var(--ink); font-weight:600}
+.stats{padding:8px; display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.stat{border-radius:18px; padding:18px 18px 16px; background:var(--glass); border:1px solid var(--line); min-height:118px; display:flex; flex-direction:column; justify-content:space-between; gap:8px}
+.stat .n{font-family:Syne,sans-serif; font-size:2.4rem; font-weight:800; letter-spacing:-.04em; line-height:1; font-variant-numeric:tabular-nums}
+.stat .n small{font-size:.95rem; color:var(--mute); font-weight:600; margin-left:3px; letter-spacing:0}
+.stat .k{font-size:.82rem; color:var(--mute); line-height:1.3}
+.stat.hot .n{color:var(--red)}
+@media (max-width:900px){ .hero .row{grid-template-columns:1fr} .stats{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))} }
+
+/* marquee */
+.marq{margin-top:clamp(40px,6vw,72px); border-block:1px solid var(--line); padding-block:14px; overflow:hidden; mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); -webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq .track{display:flex; gap:40px; width:max-content; animation:slide 48s linear infinite; font-family:"JetBrains Mono",monospace; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); white-space:nowrap}
+.marq .track span::before{content:"◆"; color:var(--red); margin-right:40px; font-size:.6rem; vertical-align:2px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* =============== section heads =============== */
+section{padding-top:clamp(64px,9vw,120px); scroll-margin-top:90px}
+.sec{display:grid; grid-template-columns:auto 1fr; gap:10px 24px; align-items:baseline; margin-bottom:clamp(24px,3vw,40px)}
+.sec .num{font-family:"JetBrains Mono",monospace; font-size:.74rem; color:var(--red); letter-spacing:.16em}
+.sec h2{font-size:clamp(2rem,4.6vw,3.6rem); font-weight:800; letter-spacing:-.04em; line-height:1}
+.sec p{grid-column:2; color:var(--ink-2); max-width:62ch; font-size:1.05rem; font-weight:300; text-wrap:pretty}
+@media (max-width:700px){ .sec{grid-template-columns:1fr} .sec p{grid-column:1} }
+
+/* =============== case studies: sticky stack =============== */
+.stack{display:flex; flex-direction:column; gap:28px}
+.case{position:relative; padding:clamp(22px,3.2vw,40px); display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:clamp(24px,3.6vw,56px); align-items:start}
+.case.pin{position:sticky; top:84px} .case.pin:nth-child(2){top:96px} .case.pin:nth-child(3){top:108px} .case.pin:nth-child(4){top:120px}
+@supports (animation-timeline: view()){
+  @media (min-width:981px) and (prefers-reduced-motion:no-preference){
+    .case.pin{transform-origin:center 0; animation:settle linear both; animation-timeline:view(); animation-range:exit 0% exit 100%}
+    @keyframes settle{to{transform:scale(.94) translateY(-10px); opacity:.55}}
+  }
+}
+.case .idx{font-family:"JetBrains Mono",monospace; font-size:.72rem; letter-spacing:.16em; color:var(--mute); display:flex; gap:14px; align-items:center}
+.case .idx b{color:var(--red); font-weight:600}
+.case .idx{flex-wrap:wrap}
+.case .idx .tag{border:1px solid var(--line); border-radius:999px; padding:3px 10px; color:var(--ink-2); text-transform:uppercase; white-space:nowrap}
+.case .idx>span:last-child{overflow-wrap:anywhere}
+.case h3{margin-top:16px; font-size:clamp(1.8rem,3.4vw,2.9rem); font-weight:800; letter-spacing:-.04em; line-height:1.02}
+.case h3 small{display:block; font-family:Figtree,sans-serif; font-weight:400; font-size:1rem; color:var(--mute); letter-spacing:0; margin-top:10px}
+.pbo{margin-top:22px; display:flex; flex-direction:column; gap:14px}
+.pbo div{display:grid; grid-template-columns:86px 1fr; gap:12px; padding-top:12px; border-top:1px solid var(--line); font-size:.95rem; color:var(--ink-2); text-wrap:pretty}
+.pbo div b{font-family:"JetBrains Mono",monospace; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); padding-top:5px; font-weight:500}
+.pbo div strong{color:var(--ink); font-weight:600}
+.metrics{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:22px}
+.metric{border-radius:14px; border:1px solid var(--line); background:var(--glass); padding:12px 14px; display:flex; flex-direction:column; gap:2px}
+.metric .n{font-family:Syne,sans-serif; font-size:1.55rem; font-weight:800; letter-spacing:-.03em; line-height:1.05; font-variant-numeric:tabular-nums}
+.metric .n small{font-size:.75rem; color:var(--mute); font-weight:600; margin-left:2px}
+.metric .k{font-size:.74rem; color:var(--mute); line-height:1.25}
+.metric.hot .n{color:var(--red)}
+.case .links{display:flex; flex-wrap:wrap; gap:10px 20px; margin-top:22px}
+.lnk{font-size:.9rem; color:var(--ink); text-decoration:none; display:inline-flex; align-items:center; gap:7px; padding-bottom:2px; border-bottom:1px solid var(--line-2); transition:border-color .2s,color .2s}
+.lnk:hover{border-color:var(--red); color:var(--red)}
+.lnk svg{width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.lnk .m{font-family:"JetBrains Mono",monospace; font-size:.66rem; color:var(--mute); letter-spacing:.08em}
+@media (max-width:980px){ .case{grid-template-columns:1fr} }
+@media (max-width:480px){ .metrics{gap:6px} .metric{padding:10px 10px} .metric .n{font-size:1.25rem} .metric .k{font-size:.66rem} .pbo div{grid-template-columns:1fr; gap:4px} }
+
+/* browser frame */
+.frame{border-radius:18px; border:1px solid var(--frame); background:var(--bg-2); overflow:hidden; box-shadow:0 30px 70px -30px rgba(0,0,0,.75)}
+.frame .bar{display:flex; align-items:center; gap:12px; padding:10px 14px; border-bottom:1px solid var(--line); background:var(--bg-3)}
+.frame .dots{display:flex; gap:6px} .frame .dots i{width:9px; height:9px; border-radius:50%; background:var(--line-2); display:block}
+.frame .url{font-family:"JetBrains Mono",monospace; font-size:.7rem; color:var(--ink-2); background:var(--bg-2); border:1px solid var(--line); border-radius:8px; padding:5px 12px; flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.frame .url b{color:var(--ink); font-weight:500}
+.frame .lock{width:10px; height:10px; stroke:var(--ok); fill:none; stroke-width:2; margin-right:6px; vertical-align:-1px}
+.frame .shot{position:relative; aspect-ratio:16/10; background:var(--bg-2)}
+.frame .shot img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top; opacity:0; transition:opacity .5s}
+.frame .shot img.on{opacity:1}
+.tabs{display:flex; gap:6px; flex-wrap:wrap; margin-top:12px}
+.tab{appearance:none; cursor:pointer; font:inherit; font-size:.82rem; color:var(--ink-2); background:var(--glass); border:1px solid var(--line); padding:7px 13px; border-radius:999px; transition:all .2s}
+.tab[aria-selected="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.cap{margin-top:12px; font-size:.84rem; color:var(--mute); min-height:2.6em} .cap b{color:var(--ink); font-weight:600}
+
+/* hub mock (illustrative) */
+.hub{display:grid; grid-template-columns:168px 1fr; min-height:420px}
+.hub .side{border-right:1px solid var(--line); padding:14px 12px; display:flex; flex-direction:column; gap:4px; background:var(--bg-3)}
+.hub .side .lg{display:flex; align-items:center; gap:8px; padding:4px 6px 12px; font-family:Syne,sans-serif; font-weight:800; font-size:.8rem}
+.hub .side .lg img{width:40px}
+.hub .side .lg span{font-family:"JetBrains Mono",monospace; font-size:.6rem; color:var(--mute); font-weight:500; letter-spacing:.1em}
+.hub .side .grp{font-family:"JetBrains Mono",monospace; font-size:.56rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); padding:10px 6px 4px}
+.hub .side a{font-size:.74rem; color:var(--ink-2); padding:6px 8px; border-radius:8px; text-decoration:none; display:flex; justify-content:space-between; gap:6px}
+.hub .side a.on{background:var(--red-soft); color:var(--ink); font-weight:600}
+.hub .side a i{font-style:normal; font-family:"JetBrains Mono",monospace; font-size:.56rem; color:var(--mute)}
+.hub .main{padding:18px; display:flex; flex-direction:column; gap:14px}
+.hub .hd{display:flex; justify-content:space-between; align-items:flex-end; gap:12px}
+.hub .hd h4{font-size:1rem; font-weight:700}
+.hub .hd p{font-size:.72rem; color:var(--mute)}
+.hub .hd .btn{font-size:.72rem; font-weight:600; background:var(--red); color:#fff; border-radius:8px; padding:7px 11px; white-space:nowrap}
+.tools{display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin:0; padding:0; list-style:none}
+.tools li{border:1px solid var(--line); border-radius:12px; padding:12px; background:var(--bg-3); display:flex; flex-direction:column; gap:9px; transition:transform .25s,border-color .25s}
+.tools li:hover{transform:translateY(-2px); border-color:var(--line-2)}
+.tools .ic{width:30px; height:30px; border-radius:9px; display:grid; place-items:center; background:var(--red-soft); color:var(--red)}
+.tools .ic svg{width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.tools b{font-size:.78rem; font-weight:600; line-height:1.2; display:block}
+.tools small{font-family:"JetBrains Mono",monospace; font-size:.58rem; color:var(--mute); letter-spacing:.04em}
+.hub .runs{border:1px solid var(--line); border-radius:12px; overflow:hidden; font-size:.7rem}
+.hub .runs div{display:grid; grid-template-columns:1.4fr 1fr .8fr .6fr; gap:8px; padding:8px 12px; border-top:1px solid var(--line); color:var(--ink-2)}
+.hub .runs div:first-child{border-top:none; background:var(--bg-3); font-family:"JetBrains Mono",monospace; font-size:.56rem; letter-spacing:.12em; text-transform:uppercase; color:var(--mute)}
+.hub .runs .ok{color:var(--ok)}
+.hub .runs .mono{font-size:.64rem}
+.redrawn{margin-top:10px; font-size:.76rem; color:var(--mute); display:flex; gap:8px; align-items:center}
+.redrawn i{width:6px; height:6px; border-radius:50%; background:var(--warn); display:inline-block}
+@media (max-width:600px){ .hub{grid-template-columns:1fr} .hub .side{display:none} .tools{grid-template-columns:1fr 1fr} .hub .runs div{grid-template-columns:1.4fr 1fr .8fr} .hub .runs div span:last-child{display:none} }
+
+/* archive drawing */
+.tree{border-radius:18px; border:1px solid var(--frame); background:var(--bg-2); padding:18px 20px; font-family:"JetBrains Mono",monospace; font-size:.74rem; line-height:1.75; color:var(--ink-2); overflow-x:auto; white-space:pre; box-shadow:0 30px 70px -30px rgba(0,0,0,.75); margin:0}
+.tree b{color:var(--ink); font-weight:600} .tree u{text-decoration:none; color:var(--red)} .tree i{font-style:normal; color:var(--faint)}
+.tb{margin-top:14px}
+.tb .lbl{display:flex; justify-content:space-between; font-family:"JetBrains Mono",monospace; font-size:.68rem; color:var(--mute); letter-spacing:.08em; margin-bottom:8px}
+.tb .lbl b{color:var(--ink); font-weight:600}
+.bar{display:flex; height:20px; border-radius:7px; overflow:hidden; border:1px solid var(--line); background:var(--bg-2)}
+.bar span{display:block; height:100%}
+.bar .keep{flex:0 0 70.47%; background:linear-gradient(90deg,var(--red-deep),var(--red))}
+.bar .dup{flex:0 0 28.8%; background:repeating-linear-gradient(135deg,var(--faint) 0 6px,transparent 6px 12px); opacity:.8}
+.bar .lit{flex:0 0 .78%; background:var(--warn)}
+.legend{display:flex; gap:16px; flex-wrap:wrap; margin-top:9px; font-size:.78rem; color:var(--ink-2)}
+.legend i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:7px; vertical-align:-1px}
+.legend .k1 i{background:var(--red)} .legend .k2 i{background:var(--faint)} .legend .k3 i{background:var(--warn)}
+.legend b{color:var(--ink); font-variant-numeric:tabular-nums}
+
+/* jira timeline drawing */
+.tl{border-radius:18px; border:1px solid var(--frame); background:var(--bg-2); padding:22px 22px 18px; box-shadow:0 30px 70px -30px rgba(0,0,0,.75)}
+.tl .hd{display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:16px}
+.tl .hd h4{font-size:.95rem; font-weight:700} .tl .hd span{font-family:"JetBrains Mono",monospace; font-size:.66rem; color:var(--mute); letter-spacing:.1em}
+.lane{position:relative; height:34px; border-radius:8px; background:var(--bg-3); border:1px solid var(--line); overflow:hidden}
+.lane span{position:absolute; top:6px; bottom:6px; border-radius:5px; background:var(--indigo); opacity:.9}
+.lane em{position:absolute; top:6px; bottom:6px; border-radius:5px; background:repeating-linear-gradient(135deg,var(--red) 0 5px,transparent 5px 10px); opacity:.75}
+.tl .axis{display:flex; justify-content:space-between; font-family:"JetBrains Mono",monospace; font-size:.62rem; color:var(--mute); margin-top:8px; letter-spacing:.06em}
+.tl .leg{display:flex; gap:16px; flex-wrap:wrap; margin-top:14px; font-size:.78rem; color:var(--ink-2)}
+.tl .leg i{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:7px; vertical-align:-1px}
+.tl .leg .a i{background:var(--indigo)} .tl .leg .b i{background:repeating-linear-gradient(135deg,var(--red) 0 3px,transparent 3px 6px)}
+.tl .leg b{color:var(--ink)}
+.tl .kv{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:16px}
+.tl .kv div{border:1px solid var(--line); border-radius:12px; padding:10px 12px; background:var(--glass)}
+.tl .kv .n{display:block; font-family:Syne,sans-serif; font-weight:800; font-size:1.4rem; letter-spacing:-.03em; line-height:1}
+.tl .kv .k{display:block; font-size:.7rem; color:var(--mute); margin-top:3px; line-height:1.25}
+.tl .kv .hot .n{color:var(--red)}
+.tl .q{margin-top:16px; font-family:"JetBrains Mono",monospace; font-size:.72rem; color:var(--ink-2); background:var(--bg-3); border:1px solid var(--line); border-radius:10px; padding:10px 12px; display:flex; gap:10px; align-items:baseline; overflow-x:auto; white-space:nowrap}
+.tl .q i{font-style:normal; color:var(--red)}
+@media (max-width:480px){ .tl .kv{grid-template-columns:1fr} }
+@media (max-width:640px){ .tl .hd{flex-direction:column; gap:4px} .tl .axis span:nth-child(2),.tl .axis span:nth-child(3),.tl .axis span:nth-child(4){display:none} .tl .q{white-space:normal; flex-wrap:wrap; gap:4px 10px} .tl .q span{flex-basis:100%} .tree{font-size:.66rem; padding:14px} .tb .lbl{flex-wrap:wrap; gap:2px 12px} }
+
+/* =============== also built =============== */
+.grid{display:grid; gap:14px; grid-template-columns:repeat(3,1fr)}
+.grid>*,.case>*,.hero .row>*,.about>*,.how>*{min-width:0}
+@media (max-width:980px){ .grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:600px){ .grid{grid-template-columns:1fr} }
+.card{padding:20px; display:flex; flex-direction:column; gap:10px; text-decoration:none; color:inherit; transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s; border-radius:22px}
+a.card:hover{transform:translateY(-4px); border-color:var(--line-2)}
+.card .kind{font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); display:flex; justify-content:space-between; gap:8px}
+.card .kind i{font-style:normal; color:var(--red)}
+.card h4{font-size:1.15rem; font-weight:700; letter-spacing:-.02em; line-height:1.25}
+.card p{font-size:.9rem; color:var(--ink-2); text-wrap:pretty}
+.card .pic{border-radius:14px; overflow:hidden; border:1px solid var(--frame); aspect-ratio:16/10; background:var(--bg-2)}
+.card .pic img{width:100%; height:100%; object-fit:cover; object-position:top; transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+a.card:hover .pic img{transform:scale(1.03)}
+.card .go{margin-top:auto; padding-top:6px; font-size:.82rem; color:var(--mute); display:flex; align-items:center; gap:6px}
+.card .go svg{width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform .2s}
+a.card:hover .go{color:var(--red)} a.card:hover .go svg{transform:translateX(3px)}
+.swatches{display:flex; gap:5px}
+.swatches i{flex:1; height:30px; border-radius:7px; border:1px solid var(--line); display:block}
+.mini{margin:0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:6px}
+.mini li{font-family:"JetBrains Mono",monospace; font-size:.62rem; color:var(--ink-2); border:1px solid var(--line); border-radius:6px; padding:3px 7px; background:var(--glass)}
+
+/* =============== how I work =============== */
+/* =============== closer look: tool hub =============== */
+.deep{display:flex; flex-direction:column; gap:18px}
+.feat{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(24px,4vw,56px); padding:clamp(22px,3.5vw,44px); align-items:center}
+.feat:nth-child(2)>div:first-child{order:2}
+.fk{font-family:"JetBrains Mono",monospace; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--mute); display:flex; gap:12px; align-items:center}
+.fk b{color:var(--red); font-weight:600}
+.feat h3{font-size:clamp(1.45rem,2.5vw,2.15rem); font-weight:800; letter-spacing:-.035em; line-height:1.05; margin-top:12px}
+.feat .t{margin-top:16px; color:var(--ink-2); font-size:.97rem; text-wrap:pretty}
+.feat .t strong{color:var(--ink); font-weight:600}
+.facts{display:flex; flex-wrap:wrap; gap:8px; margin-top:20px}
+.facts span{font-family:"JetBrains Mono",monospace; font-size:.66rem; letter-spacing:.06em; border:1px solid var(--line); border-radius:999px; padding:5px 11px; color:var(--ink-2); white-space:nowrap}
+.panel{border-radius:18px; border:1px solid var(--frame); background:var(--bg-2); padding:18px 20px 16px; box-shadow:0 30px 70px -30px rgba(0,0,0,.75); min-width:0}
+.panel .ph{display:flex; justify-content:space-between; gap:6px 12px; align-items:baseline; margin-bottom:16px; flex-wrap:wrap}
+.panel .ph h4{font-size:.92rem; font-weight:700} .panel .ph span{font-family:"JetBrains Mono",monospace; font-size:.62rem; color:var(--mute); letter-spacing:.1em}
+.pipe{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(6,1fr); gap:8px}
+.pipe li{position:relative; border:1px solid var(--line); border-radius:10px; padding:10px 10px 9px; background:var(--glass); min-width:0}
+.pipe li b{display:block; font-size:.76rem; font-weight:700; letter-spacing:-.01em; line-height:1.2}
+.pipe li span{display:block; font-family:"JetBrains Mono",monospace; font-size:.58rem; color:var(--mute); margin-top:5px; line-height:1.35}
+.pipe li:not(:last-child)::after{content:"›"; position:absolute; right:-8px; top:50%; transform:translateY(-55%); color:var(--mute); font-size:.9rem; z-index:2}
+.pipe li.hot{border-color:rgba(255,58,65,.5)} .pipe li.hot b{color:var(--red)}
+.gate{margin-top:16px; border-top:1px solid var(--line)}
+.gate>div{display:grid; grid-template-columns:10px 1fr auto; gap:12px; align-items:center; padding:9px 0; border-bottom:1px solid var(--line); font-size:.84rem}
+.gate .gh{font-family:"JetBrains Mono",monospace; font-size:.6rem; color:var(--mute); letter-spacing:.1em; text-transform:uppercase; grid-template-columns:1fr auto}
+.gate i{width:8px; height:8px; border-radius:50%; display:block} .gate i.b{background:var(--red)} .gate i.w{background:var(--warn)} .gate i.n{background:var(--indigo)}
+.gate em{font-style:normal; color:var(--mute); font-size:.74rem; display:block}
+.gate b{font-family:"JetBrains Mono",monospace; font-weight:600; font-variant-numeric:tabular-nums}
+.gate .sum{font-size:.76rem; color:var(--mute); padding-top:10px; border-bottom:0; display:block}
+.gate .sum b{color:var(--ink)}
+.loop{list-style:none; margin:0; padding:0; counter-reset:s}
+.loop li{display:grid; grid-template-columns:22px minmax(0,1fr) minmax(0,1fr); gap:12px; padding:10px 0; border-bottom:1px solid var(--line); align-items:baseline}
+.loop li:last-child{border-bottom:0}
+.loop li::before{counter-increment:s; content:counter(s,decimal-leading-zero); font-family:"JetBrains Mono",monospace; font-size:.6rem; color:var(--red); letter-spacing:.08em}
+.loop code{font-family:"JetBrains Mono",monospace; font-size:.72rem; color:var(--ink); overflow-wrap:anywhere}
+.loop span{font-size:.8rem; color:var(--mute); text-wrap:pretty}
+.loop li.live code{color:var(--ok)}
+.seal{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:16px}
+.seal span{font-family:"JetBrains Mono",monospace; font-size:.62rem; border:1px solid var(--line); border-radius:8px; padding:6px 9px; color:var(--ink-2); background:var(--glass)}
+.seal i{color:var(--mute); font-style:normal; font-size:.8rem}
+.seal span.x{border-color:rgba(255,58,65,.5); color:var(--red); text-decoration:line-through; text-decoration-color:var(--red)}
+.roles{width:100%; border-collapse:collapse; font-size:.82rem}
+.roles th,.roles td{padding:8px 6px; border-top:1px solid var(--line); text-align:center}
+.roles th{font-family:"JetBrains Mono",monospace; font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); font-weight:500}
+.roles td:first-child,.roles th:first-child{text-align:left}
+.roles td:first-child{color:var(--ink-2)}
+.roles td i{display:inline-block; width:9px; height:9px; border-radius:50%; background:var(--ok)} .roles td i.no{background:transparent; border:1px solid var(--line-2)}
+.feat>*{min-width:0}
+.roles .short{display:none}
+@media (max-width:640px){ .roles .full{display:none} .roles .short{display:inline} .roles th,.roles td{padding:8px 4px} .roles th{font-size:.56rem; letter-spacing:.06em} .roles td:first-child{font-size:.78rem} }
+@media (max-width:980px){ .feat{grid-template-columns:1fr} .feat:nth-child(2)>div:first-child{order:0} }
+@media (max-width:640px){ .pipe{grid-template-columns:repeat(3,1fr)} .pipe li::after{display:none} .loop li{grid-template-columns:22px 1fr} .loop span{grid-column:2} .gate em{display:none} }
+.how{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+.how>div{padding:24px}
+.how .n{font-family:"JetBrains Mono",monospace; font-size:.7rem; color:var(--red); letter-spacing:.16em}
+.how h4{font-size:1.35rem; font-weight:800; letter-spacing:-.03em; margin-top:10px}
+.how p{margin-top:10px; font-size:.95rem; color:var(--ink-2); text-wrap:pretty}
+@media (max-width:900px){ .how{grid-template-columns:1fr} }
+
+/* =============== about / contact =============== */
+.about{padding:clamp(24px,3.4vw,44px); display:grid; grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr); gap:clamp(24px,4vw,56px)}
+.about h2{font-size:clamp(2rem,4vw,3rem); font-weight:800; letter-spacing:-.04em; line-height:1}
+.about .bio{margin-top:16px; color:var(--ink-2); max-width:58ch; text-wrap:pretty; font-weight:300; font-size:1.05rem}
+.about .bio strong{color:var(--ink); font-weight:600}
+.roles{margin:22px 0 0; padding:0; list-style:none}
+.roles li{display:grid; grid-template-columns:140px 1fr; gap:14px; padding:12px 0; border-top:1px solid var(--line); font-size:.92rem}
+.roles .when{font-family:"JetBrains Mono",monospace; font-size:.7rem; color:var(--mute); padding-top:4px}
+.roles b{font-weight:600; display:block} .roles span{color:var(--ink-2)}
+.contact{display:flex; flex-direction:column; gap:8px}
+.contact a{display:flex; justify-content:space-between; align-items:center; gap:12px; text-decoration:none; color:inherit; padding:14px 16px; border-radius:14px; border:1px solid var(--line); background:var(--glass); transition:border-color .2s,transform .2s}
+.contact a:hover{border-color:var(--red); transform:translateX(4px)}
+.contact .l{font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mute)}
+.contact .v{font-size:.92rem; font-weight:500; text-align:right; overflow-wrap:anywhere}
+.contact .note{font-size:.8rem; color:var(--mute); padding:6px 4px 0; text-wrap:pretty}
+@media (max-width:900px){ .about{grid-template-columns:1fr} }
+@media (max-width:480px){ .roles li{grid-template-columns:1fr; gap:4px} }
+
+footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-family:"JetBrains Mono",monospace; font-size:.7rem; color:var(--mute); letter-spacing:.06em; text-transform:uppercase}
+</style>
+</head>
+<body>
+<div class="ground" aria-hidden="true"><span class="blob a"></span><span class="blob b"></span><span class="blob c"></span></div>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav glass" aria-label="Sections">
+  <a class="brand" href="#top"><i></i>Arvin Abedi</a>
+  <ul>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#also">Also built</a></li>
+    <li><a href="#how">How I work</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <a class="cta" href="mailto:abediartin@gmail.com">Get in touch</a>
+  <button class="theme" id="themeToggle" type="button" aria-label="Switch colour theme">
+    <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+  </button>
+</nav>
+
+<main class="wrap" id="top">
+
+<!-- ========== HERO ========== -->
+<header class="hero">
+  <p class="kicker"><b>Arvin Abedi</b> Product builder <span class="pill">Tehran → relocating · EU · UK · Canada · Gulf</span></p>
+  <h1 aria-label="Spec to deploy. Solo. In weeks.">
+    <span class="ln"><span>Spec to deploy.</span></span>
+    <span class="ln"><span class="solo">Solo.</span></span>
+    <span class="ln"><span class="weeks">In weeks.</span></span>
+  </h1>
+  <div class="row">
+    <p class="lede">I sit with a team, find the slow part of its week, and ship the product that removes it. At Ronix Tools that meant replacing a branding team's hand-made production work with <strong>eight tools I built and the platform that runs them</strong>, a content-quality dashboard and a packaging workflow system that sign in through it, shipping <strong>a distributor-facing asset portal</strong>, re-architecting <strong>a 193 TB archive</strong>, and reading <strong>29,000 Jira issues</strong> to find where the time actually went. Each one started as a problem, not a ticket, and each one runs on the company's own servers today.</p>
+    <aside class="stats glass" aria-label="At a glance">
+      <div class="stat hot"><span class="n">4</span><span class="k">internal apps in production behind one sign-in, with roles, HTTPS and auto-deploy</span></div>
+      <div class="stat"><span class="n">8</span><span class="k">production tools built from scratch and shipped inside one platform</span></div>
+      <div class="stat"><span class="n">193<small>TB</small></span><span class="k">archive crawled, measured and re-planned down to the folder</span></div>
+      <div class="stat"><span class="n">37<small>%</small></span><span class="k">of a product's 70-day pipeline found to be dead time, from 29k Jira issues</span></div>
+    </aside>
+  </div>
+  <div class="marq" aria-hidden="true">
+    <div class="track">
+      <span>Product discovery</span><span>Information architecture</span><span>Next.js · React · TypeScript</span><span>SQLite · Postgres · Supabase</span><span>Design systems</span><span>Roles &amp; access</span><span>CI/CD on a company server</span><span>Usability review</span><span>Install manuals IT can follow</span><span>Local LLMs, when privacy demands it</span><span>Persian &amp; English</span>
+      <span>Product discovery</span><span>Information architecture</span><span>Next.js · React · TypeScript</span><span>SQLite · Postgres · Supabase</span><span>Design systems</span><span>Roles &amp; access</span><span>CI/CD on a company server</span><span>Usability review</span><span>Install manuals IT can follow</span><span>Local LLMs, when privacy demands it</span><span>Persian &amp; English</span>
+    </div>
+  </div>
+</header>
+
+<!-- ========== WORK ========== -->
+<section id="work">
+  <div class="sec">
+    <span class="num">SELECTED WORK</span>
+    <h2>Four problems, four products.</h2>
+    <p>Every one of these began with a team losing time. The brief, the design, the deployment and the documentation were mine on all four, and so was the code, except on the DAM, where I worked with one developer. The branding team and IT were the stakeholders.</p>
+  </div>
+
+  <div class="stack">
+
+    <!-- 01 TOOL HUB -->
+    <article class="case glass" id="toolhub">
+      <div>
+        <p class="idx"><b>01</b> <span class="tag">Internal platform</span> <span>toolhub.ronixtools.com</span></p>
+        <h3>Eight tools the team never had, and the platform to run them.<small>Ronix Tool Hub · Aug–Oct 2026 · sole builder, from blank repo to production</small></h3>
+        <div class="pbo">
+          <div><b>Problem</b><span>Product cards, labels, QR codes, catalog sheets, infographics and landing pages were made by hand, one at a time, by whoever had time in the branding team. Every request queued behind a designer, every output looked slightly different, and nothing was logged or repeatable.</span></div>
+          <div><b>Constraint</b><span>IT had no Node experience and there would be no cloud. So: <strong>one server, one SQLite file, an idempotent setup script</strong> with eight self-checks, and an install manual a non-technical admin can finish in thirty minutes.</span></div>
+          <div><b>Built</b><span><strong>Eight production tools, written from scratch</strong>: Persian and English product-card generators, a carton-label generator, a QR generator, a one-page catalog designer, a landing-page editor that keeps every version, and an infographic designer with a translator that rebuilds the same picture in another language. Every PDF comes out in CMYK, ready for the printer. Then the platform they live in: one login, owner/admin/user roles with per-person tool access, invite-only onboarding, searchable run history, HTTPS via nginx, and <strong>a push to <span class="mono">main</span> goes live in about two minutes</strong>. It is also the sign-in for the company's other internal apps: Content OS, PDMS and the DAM.</span></div>
+        </div>
+        <div class="metrics">
+          <div class="metric hot"><span class="n">8</span><span class="k">tools built from scratch, one login</span></div>
+          <div class="metric"><span class="n">49</span><span class="k">pull requests merged in six weeks</span></div>
+          <div class="metric"><span class="n">~2<small>min</small></span><span class="k">from push to production</span></div>
+        </div>
+        <div class="links">
+          <a class="lnk" href="https://github.com/arvinabedi/tool-hub" target="_blank" rel="noopener">Case study <span class="m">GITHUB</span><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+            <a class="lnk" href="#inside">Three details, closer look<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="frame">
+          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url"><svg class="lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><b>toolhub.ronixtools.com</b>/dashboard</span></div>
+          <div class="hub">
+            <div class="side">
+              <div class="lg"><img src="assets/ronix-logo.svg" alt="" width="128" height="48"><span>TOOL HUB</span></div>
+              <div class="grp">Tools</div>
+              <a class="on" href="#toolhub">Card generator <i>FA</i></a>
+              <a href="#toolhub">Card generator <i>EN</i></a>
+              <a href="#toolhub">Label generator</a>
+              <a href="#toolhub">QR code generator</a>
+              <a href="#toolhub">Catalog page designer</a>
+              <a href="#toolhub">Landing page editor</a>
+              <a href="#toolhub">Infographic designer</a>
+              <a href="#toolhub">Infographic translator</a>
+              <div class="grp">Apps</div>
+              <a href="#contentos">Content OS</a>
+              <a href="#pdms">PDMS</a>
+              <a href="#dam">DAM</a>
+              <div class="grp">Manage</div>
+              <a href="#toolhub">Run history</a>
+              <a href="#toolhub">Users &amp; roles <i>3</i></a>
+              <a href="#toolhub">Settings</a>
+            </div>
+            <div class="main">
+              <div class="hd"><div><h4>Good morning, Sara</h4><p>8 tools · 3 apps · last deploy 2 min after push</p></div><span class="btn">New card</span></div>
+              <ul class="tools">
+                <li><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h6M7 14h10"/></svg></span><div><b>Card generator</b><small>PERSIAN</small></div></li>
+                <li><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></svg></span><div><b>Card generator</b><small>ENGLISH</small></div></li>
+                <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 7h11l5 5-5 5H3z"/><circle cx="7" cy="12" r="1"/></svg></span><div><b>Label generator</b><small>PRODUCT LABELS</small></div></li>
+                <li><span class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h3v3M20 14v6h-6"/></svg></span><div><b>QR generator</b><small>PACKAGING</small></div></li>
+                <li><span class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><div><b>Catalog designer</b><small>ONE-PAGE</small></div></li>
+                <li><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h8M8 16h5"/></svg></span><div><b>Landing editor</b><small>WEB</small></div></li>
+                <li><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg></span><div><b>Infographic designer</b><small>PRODUCT PICTURES</small></div></li>
+                <li><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h8M8 3v2M5 9c1.5 3 4 5 7 6M11 5c-1 4-3.5 7-7 9M13 21l4-9 4 9M14.5 18h5"/></svg></span><div><b>Infographic translator</b><small>ANY LANGUAGE</small></div></li>
+              </ul>
+              <div class="runs">
+                <div><span>Recent runs</span><span>Tool</span><span>By</span><span>Status</span></div>
+                <div><span class="mono">RH-4004 · card · FA</span><span>Card generator</span><span>Sara</span><span class="ok">Done</span></div>
+                <div><span class="mono">RN-0919 · 24 labels</span><span>Label generator</span><span>Mehran</span><span class="ok">Done</span></div>
+                <div><span class="mono">Spring drills · page 3</span><span>Catalog designer</span><span>Nika</span><span class="ok">Done</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="redrawn"><i></i>Redrawn from the live app. The Hub runs on the company network, so names and runs here are illustrative.</p>
+      </div>
+    </article>
+
+    <!-- 02 DAM -->
+    <article class="case glass" id="dam">
+      <div>
+        <p class="idx"><b>02</b> <span class="tag">Partner-facing product</span> <span>dam.ronixtools.com</span></p>
+        <h3>Distributors stopped emailing for photos.<small>Ronix DAM · 2026 · product, UX, partner-portal redesign and deployment, with one developer</small></h3>
+        <div class="pbo">
+          <div><b>Problem</b><span>Approved product photography, labels and manuals sat on a NAS two network hops deep. Every distributor request for a file became an email to the brand team, and nobody could say which version was the approved one.</span></div>
+          <div><b>Built</b><span>A digital asset manager with <strong>five roles on one library</strong>. Staff upload, tag against a controlled taxonomy and approve; a distributor types a product code and downloads exactly the files their store needs. Self-hosted Supabase, CI with a self-hosted runner, atomic release switching.</span></div>
+          <div><b>Then audited</b><span>I reviewed the first build as a hostile user: <strong>thirty findings</strong>, three of them critical, each with evidence and the fix. Then I captured every route as every role, 47 screens, so the next release had a baseline.</span></div>
+        </div>
+        <div class="metrics">
+          <div class="metric hot"><span class="n">5</span><span class="k">roles, one library, one truth</span></div>
+          <div class="metric"><span class="n">1</span><span class="k">product code → every file a store needs</span></div>
+          <div class="metric"><span class="n">30</span><span class="k">usability findings, 3 critical, before release</span></div>
+        </div>
+        <div class="links">
+          <a class="lnk" href="https://github.com/arvinabedi/brand-asset-manager" target="_blank" rel="noopener">Case study <span class="m">GITHUB</span><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="frame">
+          <div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="url" id="damUrl"><svg class="lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><b>dam.ronixtools.com</b>/dashboard</span></div>
+          <div class="shot" id="damShot">
+            <img class="on" src="assets/dam-admin-overview.jpg" alt="DAM admin overview" data-url="/dashboard" data-cap="<b>Admin · Overview.</b> Capacity by asset type, the approval queue, weekly ingest.">
+            <img src="assets/dam-portal.jpg" alt="Distributor portal" loading="lazy" data-url="/portal" data-cap="<b>Distributor · Portal.</b> One search box. A product code in, the store's photos, labels and manuals out.">
+            <img src="assets/dam-assets.jpg" alt="Asset library" loading="lazy" data-url="/assets" data-cap="<b>Staff · Library.</b> Nine-facet filters, grid and list, bulk download, signed previews.">
+            <img src="assets/dam-asset-detail.jpg" alt="Asset detail" loading="lazy" data-url="/assets/[id]" data-cap="<b>Staff · Asset.</b> Versions, renditions, rights window, audit trail.">
+            <img src="assets/dam-taxonomy.jpg" alt="Taxonomy admin" loading="lazy" data-url="/admin/taxonomy" data-cap="<b>Admin · Taxonomy.</b> The controlled vocabulary behind every tag.">
+          </div>
+        </div>
+        <div class="tabs" role="tablist" aria-label="DAM screens">
+          <button class="tab" role="tab" aria-selected="true" data-i="0" type="button">Admin</button>
+          <button class="tab" role="tab" aria-selected="false" data-i="1" type="button">Distributor portal</button>
+          <button class="tab" role="tab" aria-selected="false" data-i="2" type="button">Library</button>
+          <button class="tab" role="tab" aria-selected="false" data-i="3" type="button">Asset</button>
+          <button class="tab" role="tab" aria-selected="false" data-i="4" type="button">Taxonomy</button>
+        </div>
+        <p class="cap" id="damCap"><b>Admin · Overview.</b> Capacity by asset type, the approval queue, weekly ingest.</p>
+      </div>
+    </article>
+
+    <!-- 03 ARCHIVE -->
+    <article class="case glass" id="archive">
+      <div>
+        <p class="idx"><b>03</b> <span class="tag">Information architecture</span> <span>82 shares · 36 servers</span></p>
+        <h3>4.2 million files, finally findable.<small>Branding archive programme · Aug–Sep 2026 · crawl to runbook</small></h3>
+        <div class="pbo">
+          <div><b>Problem</b><span>Fifteen years of design work across 82 network shares. No product had a home: one drill's assets were spread over 32 shares. A folder called <span class="mono">video</span> existed at seven different depths, and the approved files sat deepest of all.</span></div>
+          <div><b>Measured</b><span>A read-only crawl of everything reachable: <strong>193.4 TB, 4.23 million files</strong>. Thirty percent duplicate. 4,134 paths longer than Windows allows. The product code buried in 41% of paths turned out to be the join key for the whole archive.</span></div>
+          <div><b>Decided</b><span><strong>Six top folders, four levels</strong>, every folder name owned by exactly one level, a 53-term controlled vocabulary, and a filing rule that needs no judgement call. Then an executive deck to get it signed off, and a migration runbook that never deletes anything.</span></div>
+        </div>
+        <div class="metrics">
+          <div class="metric hot"><span class="n">193<small>TB</small></span><span class="k">crawled and classified</span></div>
+          <div class="metric"><span class="n">15<small>→4</small></span><span class="k">folder depth, maximum</span></div>
+          <div class="metric"><span class="n">56<small>TB</small></span><span class="k">duplicates found, reclaimable</span></div>
+        </div>
+        <div class="links">
+          <a class="lnk" href="https://github.com/arvinabedi/archive-restructure" target="_blank" rel="noopener">Case study <span class="m">GITHUB</span><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        </div>
+      </div>
+      <div>
+<pre class="tree" aria-label="The six-zone archive structure"><b>\\ronix.ir\archive\</b>
+<b>products\</b>                      <i>one product, one home</i>
+└─ <u>RH-4004\</u>                    <i>the code, verbatim, flat</i>
+   ├─ photo\ video\ packaging\ 3d\ catalog\ document\
+   └─ _linked\                 <i>shortcuts to campaigns featuring it</i>
+<b>campaigns\</b>                     <i>work made for a brief</i>
+└─ <u>1403\</u>
+   └─ <u>1403-042-spring-drills\</u>
+      └─ 1-brief\ 2-source\ 3-work\ 4-output\ 5-final\
+<b>brand\</b>   logo\ font\ icon\ colour\ guideline\ template\
+<b>company\</b> building\ factory\ office\ event\ exhibition\ people\
+<b>brands\</b>  vogler\ ronix-service\ jit\ onci\ …
+<b>frozen\</b>  personal\ old-archive\     <i>read-only, never reorganised</i></pre>
+        <div class="tb">
+          <div class="lbl"><span>WHAT ACTUALLY HAS TO MOVE</span><span><b>136.3 TB</b> of 193.4</span></div>
+          <div class="bar" role="img" aria-label="Of 193.4 TB crawled: 136.3 TB to file, 55.7 TB duplicates, 1.5 TB litter"><span class="keep"></span><span class="dup"></span><span class="lit"></span></div>
+          <div class="legend"><span class="k1"><i></i>To file <b>136.3 TB</b></span><span class="k2"><i></i>Duplicates <b>55.7 TB</b></span><span class="k3"><i></i>Caches &amp; litter <b>1.5 TB</b></span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 04 JIRA -->
+    <article class="case glass" id="jira">
+      <div>
+        <p class="idx"><b>04</b> <span class="tag">Analytics + local LLM</span> <span>29,000 issues</span></p>
+        <h3>Found the 37% of time when nothing was happening.<small>Jira pipeline analytics · 2026 · Python, SQLite, Ollama</small></h3>
+        <div class="pbo">
+          <div><b>Problem</b><span>Managers asked "why are we late?" and Jira could not answer. Issues closed the same day; products still took months. Jira's own links were unused, so nothing connected one product's graphic, content, filming, packaging and publish steps.</span></div>
+          <div><b>Found</b><span>41% of issue summaries carry a product code. Reconstructing each product's chain from that code showed <strong>a median 70 days per product, of which 25.8 days nobody had any issue open</strong>. The worst bottleneck was photography, the oldest unfinished step on 280 of 702 open products. Invisible in Jira, because it happens between tickets.</span></div>
+          <div><b>Built</b><span>A manager-facing dashboard plus an assistant you ask in plain English. Counts always query live Jira; diagnoses must cite the measurement behind every claim. A regression test checks that <strong>every percentage in an answer appears verbatim in the evidence</strong>, after an early version claimed 90% where the truth was 55%. Runs on a local model because the data cannot leave the network.</span></div>
+        </div>
+        <div class="metrics">
+          <div class="metric hot"><span class="n">36.8<small>%</small></span><span class="k">of pipeline time is dead time</span></div>
+          <div class="metric"><span class="n">70<small>days</small></span><span class="k">median per product, p90 146</span></div>
+          <div class="metric"><span class="n">280<small>/702</small></span><span class="k">open products stuck at photography</span></div>
+        </div>
+        <div class="links">
+          <a class="lnk" href="https://github.com/Ronix-Brand/ronix-jira-assistant" target="_blank" rel="noopener">Repository <span class="m">GITHUB · RONIX-BRAND</span><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <div class="tl">
+          <div class="hd"><h4>One product's journey through Jira</h4><span>MEDIAN · 70 DAYS · 7 ISSUES · 4 PEOPLE</span></div>
+          <div class="lane" role="img" aria-label="Timeline of one product: issues open in blue, dead time hatched in red; dead time is 36.8% of the 70 days">
+            <span style="left:0;width:9%"></span><em style="left:9%;width:7%"></em>
+            <span style="left:16%;width:12%"></span><em style="left:28%;width:11%"></em>
+            <span style="left:39%;width:8%"></span><span style="left:47%;width:6%"></span><em style="left:53%;width:13%"></em>
+            <span style="left:66%;width:14%"></span><em style="left:80%;width:6%"></em>
+            <span style="left:86%;width:9%"></span><span style="left:95%;width:5%"></span>
+          </div>
+          <div class="axis"><span>DAY 0 · GRAPHIC</span><span>CONTENT</span><span>FILMING</span><span>PACKAGING</span><span>DAY 70 · PUBLISH</span></div>
+          <div class="leg"><span class="a"><i></i>An issue is open <b>63.2%</b></span><span class="b"><i></i>No issue open for this product <b>36.8% · 25.8 days</b></span></div>
+          <div class="kv">
+            <div><span class="n">29k</span><span class="k">issues synced to a local cache</span></div>
+            <div><span class="n">41<small>%</small></span><span class="k">of summaries carry a product code</span></div>
+            <div class="hot"><span class="n">1 day</span><span class="k">how long a single issue stays open, which is why the board looked fine</span></div>
+          </div>
+          <div class="q"><i>›</i> ask "what is late and who owns it?" <span style="color:var(--mute)">· answered from live JQL, lookups shown</span></div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ========== CLOSER LOOK: TOOL HUB ========== -->
+<section id="inside">
+  <div class="sec">
+    <span class="num">CLOSER LOOK · 01</span>
+    <h2>Three details inside the Hub.</h2>
+    <p>The parts of Tool Hub that took real engineering: a catalog tool that reads the website and refuses to print bad data, a deploy loop with no pipeline, and access that seals itself.</p>
+  </div>
+  <div class="deep">
+
+    <article class="feat glass">
+      <div>
+        <p class="fk"><b>A</b> Catalog page designer</p>
+        <h3>It reads the website, then refuses to print bad data.</h3>
+        <p class="t">A one-page catalog used to mean retyping specs off ronixtools.com. The designer <strong>syncs a product range straight from the live site</strong> into a local cache, converts every image to a 300-dpi TIFF for print, and runs a gate before anything reaches a page: images that go soft past 65 mm, products with no spec table, labels misspelled on the site. Nothing is guessed around. Blockers come back as a list a person decides on, so a wrong value never reaches the printer.</p>
+        <div class="facts"><span>84 products · 517 spec rows · 610 bullets</span><span>images → 300-dpi TIFF</span><span>27 blockers caught before layout</span></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h4>One sync, scoped to a range</h4><span>23 AUG 2026 · 84 OF 2,017 PRODUCTS</span></div>
+        <ol class="pipe">
+          <li><b>ronixtools.com</b><span>live product pages</span></li>
+          <li><b>Sync</b><span>one range, not the whole site</span></li>
+          <li><b>Cache</b><span>517 spec rows · 610 bullets</span></li>
+          <li><b>Images</b><span>24 → TIFF, 300 dpi</span></li>
+          <li class="hot"><b>Print gate</b><span>27 blockers</span></li>
+          <li><b>Page</b><span>clean data only</span></li>
+        </ol>
+        <div class="gate">
+          <div class="gh"><span>Caught before layout</span><span>Products</span></div>
+          <div><i class="b"></i><span>Image below print resolution<em>the site only stores 768 px; soft past 65 mm</em></span><b>24</b></div>
+          <div><i class="w"></i><span>No specification table<em>would print as an empty panel</em></span><b>8</b></div>
+          <div><i class="w"></i><span>No feature bullets</span><b>7</b></div>
+          <div><i class="n"></i><span>Spec label misspelled on the site<em>corrected in the cache, original kept</em></span><b>6</b></div>
+          <div><i class="b"></i><span>Accessory list with no separators<em>stored whole, never split by guess</em></span><b>3</b></div>
+          <span class="sum"><b>0 of 24</b> cached images can hold 300 dpi at 90 mm. The gate says so before a designer finds out on paper.</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="feat glass">
+      <div>
+        <p class="fk"><b>B</b> Deploy loop</p>
+        <h3>No pipeline, no cloud. The server pulls.</h3>
+        <p class="t">The company firewall blocks port 22 and there is no CI runner. So the server does the pulling: <strong>every two minutes a cron job checks <span class="mono">main</span> over SSH on port 443</strong>, takes a lock, builds, and restarts the service. One log to watch. The database lives outside the app folder, so a deploy can replace the whole app without touching an account. The first release ran on Windows Server with a PowerShell installer that runs eight checks and is safe to run twice. The move to Ubuntu kept the rule: anyone can redeploy, nothing can half-deploy.</p>
+        <div class="facts"><span>cron · every 2 min</span><span>SSH over 443</span><span>lock file, one log</span><span>DB outside the app</span></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h4>Push to production</h4><span>≈ 2 MIN · NO RUNNER</span></div>
+        <ol class="loop">
+          <li><code>git push origin main</code><span>from my laptop. Nothing else to click.</span></li>
+          <li><code>*/2 * * * *  ~/toolhub-poll.sh</code><span>the server asks GitHub, GitHub never reaches in</span></li>
+          <li><code>flock ~/toolhub-deploy.lock</code><span>two deploys can never overlap</span></li>
+          <li><code>git pull  ·  ssh.github.com:443</code><span>port 22 is blocked on the corporate network</span></li>
+          <li><code>npm run build</code><span>Next 16 production build, logged to one file</span></li>
+          <li><code>systemctl --user restart toolhub</code><span>Restart=on-failure · nginx in front · wildcard cert</span></li>
+          <li class="live"><code>https://toolhub.ronixtools.com</code><span>live, with every account exactly where it was</span></li>
+        </ol>
+      </div>
+    </article>
+
+    <article class="feat glass">
+      <div>
+        <p class="fk"><b>C</b> Accounts &amp; roles</p>
+        <h3>Access that seals itself.</h3>
+        <p class="t">The first visit to <span class="mono">/setup</span> creates the one administrator, and <strong>then that page stops existing</strong>, so nobody can wander in later and make themselves admin. Everyone after that arrives by invite, mailed through the company's Exchange relay, with a generated password they must change on first sign-in. Three roles decide who runs tools, who edits the library, and who manages people. Passwords are scrypt hashes, sessions live server-side and can be revoked, and every run is logged with who, what, and when.</p>
+        <div class="facts"><span>/setup closes after one use</span><span>invite-only</span><span>scrypt · revocable sessions</span><span>3 roles</span></div>
+      </div>
+      <div class="panel">
+        <div class="ph"><h4>From first admin to the whole team</h4><span>SETTINGS → USERS</span></div>
+        <div class="seal"><span class="x">/setup</span><i>›</i><span>first admin</span><i>›</i><span>invite by email</span><i>›</i><span>generated password</span><i>›</i><span>change on first sign-in</span></div>
+        <table class="roles">
+          <thead><tr><th>Can</th><th>Employee</th><th><span class="full">Tool manager</span><span class="short">Tool mgr</span></th><th><span class="full">Administrator</span><span class="short">Admin</span></th></tr></thead>
+          <tbody>
+            <tr><td>Run every tool</td><td><i></i></td><td><i></i></td><td><i></i></td></tr>
+            <tr><td>See own run history</td><td><i></i></td><td><i></i></td><td><i></i></td></tr>
+            <tr><td>See everyone's history</td><td><i class="no"></i></td><td><i></i></td><td><i></i></td></tr>
+            <tr><td>Edit the tool library</td><td><i class="no"></i></td><td><i></i></td><td><i></i></td></tr>
+            <tr><td>Add, edit, remove people</td><td><i class="no"></i></td><td><i class="no"></i></td><td><i></i></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ========== ALSO BUILT ========== -->
+<section id="also">
+  <div class="sec">
+    <span class="num">ALSO BUILT</span>
+    <h2>Two more apps, the system under them, and two side projects.</h2>
+    <p>Apps that plug into the Hub, smaller pieces that made the big ones faster, and what I build when nobody is asking.</p>
+  </div>
+  <div class="grid">
+    <a class="card glass" id="contentos" href="https://github.com/arvinabedi/content-os" target="_blank" rel="noopener">
+      <span class="kind">Internal app · Python + Node <i>2026</i></span>
+      <h4>Content OS</h4>
+      <ul class="mini"><li>11 sections</li><li>weekly XLSX + CMS API</li><li>readiness score</li><li>Tool Hub sign-in</li></ul>
+      <p>The content team's dashboard for a multilingual, multi-brand catalog: which products are missing what, which languages are behind, which categories drag the score down, and the week-over-week trend. A readiness score weighs content 70, category 15, SEO 15. Deployed on the company server, signed in through Tool Hub.</p>
+      <span class="go">Case study <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <a class="card glass" id="pdms" href="https://github.com/arvinabedi/pdms" target="_blank" rel="noopener">
+      <span class="kind">Internal app · Persian, RTL <i>2026</i></span>
+      <h4>PDMS <span class="fa" lang="fa" dir="rtl" style="font-size:.85em;color:var(--mute);font-weight:500">گردش کار بسته‌بندی</span></h4>
+      <ul class="mini"><li>order → assign → versions → approve</li><li>roles synced from Tool Hub</li><li>served at /pdms</li></ul>
+      <p>The packaging team's order and approval workflow. The commercial team files an order, the packaging lead assigns a designer, every draft version is tracked to approval and delivery, and the reports show the team's real turnaround. Built in Persian, first version in two days.</p>
+      <span class="go">Case study <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <div class="card glass">
+      <span class="pic"><img src="assets/guidelines-home.jpg" alt="Ronix Brand Guidelines site" loading="lazy" width="1400" height="875"></span>
+      <span class="kind">Brand guidelines site <i>2026</i></span>
+      <h4>One brand, two disciplines</h4>
+      <p>The logotype, its clear space and thirteen misuses; the four print colours in CMYK, RGB and Pantone; then the UI system component by component. A static site with its own server setup script.</p>
+      <span class="go">Runs on the company network</span>
+    </div>
+    <div class="card glass">
+      <span class="kind">Design systems <i>2026</i></span>
+      <h4>Ronix Design System</h4>
+      <span class="swatches" aria-hidden="true"><i style="background:#ec1f26"></i><i style="background:#242424"></i><i style="background:#616161"></i><i style="background:#e0e0e0"></i><i style="background:#ffffff"></i></span>
+      <ul class="mini"><li>915 tokens</li><li>124 components</li><li>778 icon glyphs</li><li>light + dark</li><li>RTL</li></ul>
+      <p>Fluent 2 foundations re-skinned in Ronix red and merged with the Figma UI kit's 3,414 variables. A second, product-specific system drives the partner portal. New tool screens get built on these in days, not weeks.</p>
+      <span class="go">Walkthrough on request</span>
+    </div>
+    <div class="card glass">
+      <span class="pic"><img src="assets/partner-hero.webp" alt="Distributor recruitment landing page hero" loading="lazy" width="1052" height="1076"></span>
+      <span class="kind">Go-to-market page <i>2026</i></span>
+      <h4>Recruiting European distributors</h4>
+      <p>The landing page for Ronix's German warehouse: no minimum order, 48-hour preparation, thirty countries. Animated supply-line map, benefit bento, product series, trade-show wall, all from real photography and copy.</p>
+      <span class="go">Walkthrough on request</span>
+    </div>
+    <div class="card glass">
+      <span class="pic"><img src="assets/spectra-app.jpg" alt="Spectra app in Persian" loading="lazy" width="1400" height="875"></span>
+      <span class="kind">Side project · web + Android <i>2026</i></span>
+      <h4>Spectra <span class="fa" lang="fa" dir="rtl" style="font-size:.85em;color:var(--mute);font-weight:500">سامانه تعیین ساختار</span></h4>
+      <p>An offline tool for chemistry students that turns spectra into ranked candidate structures. 188 reference compounds, a practice mode that grades SMILES answers by computation, packaged as an Android app.</p>
+      <span class="go">Demo on request</span>
+    </div>
+    <a class="card glass" href="https://setayeshahmadi.com" target="_blank" rel="noopener">
+      <span class="pic"><img src="assets/setayesh-site.jpg" alt="setayeshahmadi.com" loading="lazy" width="1400" height="875"></span>
+      <span class="kind">Client site <i>2026</i></span>
+      <h4>A designer's portfolio, shipped</h4>
+      <p>Site and printable deck for graphic designer Setayesh Ahmadi. Self-hosted fonts, zero external requests, Persian and Latin typesetting, deployed on Liara.</p>
+      <span class="go">Visit <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+    <div class="card glass">
+      <span class="kind">Operations <i>2026</i></span>
+      <h4>Server &amp; tools reference</h4>
+      <p>One page for whoever runs the box after me: hosts, ports, nginx routing, deploy paths, databases, backups, the open questions. Written because production should not live in one person's head.</p>
+      <span class="go">Internal document</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW I WORK ========== -->
+<section id="how">
+  <div class="sec">
+    <span class="num">HOW I WORK</span>
+    <h2>Sit with the team. Ship in days. Hand over properly.</h2>
+  </div>
+  <div class="how">
+    <div class="glass"><span class="n">01</span><h4>Start inside the workflow</h4><p>I learn how the team actually does the job before I touch a spec: who waits on whom, where the files live, what the Friday panic looks like. The product brief comes out of that, not out of a backlog.</p></div>
+    <div class="glass"><span class="n">02</span><h4>Prototype in days, with AI as the second pair of hands</h4><p>I design, write and build with AI coding tools in the loop and own every line that ships. A clickable version is in front of users within the week, and it changes shape there, not in a document.</p></div>
+    <div class="glass"><span class="n">03</span><h4>Deploy where the company lives</h4><p>Roles, HTTPS, auto-deploy, backups and an install manual IT can follow without me. Then I review my own work as a hostile user and fix what I find before anyone else does.</p></div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section id="about">
+  <article class="about glass">
+    <div>
+      <p class="kicker"><b>About</b></p>
+      <h2>Arvin Abedi</h2>
+      <p class="bio">I came to product from language. A degree in English translation and three years teaching made me good at one thing above all: <strong>understanding what someone actually needs and saying it back clearly</strong>. At Ronix Tools that turned into briefs, then prototypes, then two production systems and a department's information architecture. Persian native, English professional, French beginner. Based in Tehran and ready to relocate.</p>
+      <ul class="roles">
+        <li><span class="when">2024 — NOW</span><div><b>Ronix Tools · product builder, Branding department</b><span>Title on paper: AI Content Specialist. In practice the de facto product owner of the team's internal stack: Tool Hub, Content OS, PDMS, DAM, archive programme, design systems, Jira analytics.</span></div></li>
+        <li><span class="when">2023 — 2024</span><div><b>Ronix Tools · English content writer</b><span>Product and marketing copy for the international brand; custom GPTs and LLM workflows for translation, SEO and research.</span></div></li>
+        <li><span class="when">2020 — 2023</span><div><b>Nassir Language Institute · English instructor</b><span>Academic, professional and immigration-track learners.</span></div></li>
+        <li><span class="when">2019 — 2022</span><div><b>BA, English Translation</b><span>Qazvin International University.</span></div></li>
+      </ul>
+    </div>
+    <div class="contact">
+      <a href="mailto:abediartin@gmail.com"><span class="l">Email</span><span class="v">abediartin@gmail.com</span></a>
+      <a href="https://www.linkedin.com/in/arvin-a-873394127/" target="_blank" rel="noopener"><span class="l">LinkedIn</span><span class="v">arvin-a-873394127</span></a>
+      <a href="https://github.com/arvinabedi" target="_blank" rel="noopener"><span class="l">GitHub</span><span class="v">arvinabedi</span></a>
+      <a href="https://github.com/Ronix-Brand" target="_blank" rel="noopener"><span class="l">GitHub · work</span><span class="v">Ronix-Brand</span></a>
+      <p class="note">Open to forward-deployed product, builder-PM and design-engineering roles with relocation to the EU, UK, Canada or the Gulf.</p>
+    </div>
+  </article>
+</section>
+
+<footer>
+  <span>Arvin Abedi · Product builder</span>
+  <span>Updated October 2026</span>
+</footer>
+</main>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeToggle');
+  function cur(){var t=root.getAttribute('data-theme'); if(t) return t; return matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}
+  btn.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark'; root.setAttribute('data-theme',n); try{localStorage.setItem('arvin.theme',n)}catch(e){}});
+
+  // cursor spotlight on glass
+  document.querySelectorAll('.glass').forEach(function(el){
+    el.addEventListener('pointermove',function(e){var r=el.getBoundingClientRect(); el.style.setProperty('--mx',(e.clientX-r.left)+'px'); el.style.setProperty('--my',(e.clientY-r.top)+'px');});
+  });
+
+  // sticky-stack the case studies only when a card fits under the nav; otherwise it would pin with its bottom cut off
+  var cases=document.querySelectorAll('.case');
+  function pin(){
+    var wide=innerWidth>980;
+    cases.forEach(function(c,i){
+      if(!wide){ c.classList.remove('pin'); c.style.top=''; return; }
+      c.classList.add('pin');
+      var want=84+i*12, h=c.getBoundingClientRect().height;
+      // a card taller than the screen pins once its bottom edge is in view, so every line is read before the next card slides over it
+      c.style.top=Math.min(want, innerHeight-h-20)+'px';
+    });
+  }
+  pin(); addEventListener('resize',pin); addEventListener('load',pin); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(pin);
+
+  // DAM screens
+  var shots=document.querySelectorAll('#damShot img'), tabs=document.querySelectorAll('.tab'), cap=document.getElementById('damCap'), url=document.getElementById('damUrl');
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    var i=+t.dataset.i; tabs.forEach(function(x){x.setAttribute('aria-selected',String(x===t))});
+    shots.forEach(function(s,k){s.classList.toggle('on',k===i)});
+    cap.innerHTML=shots[i].dataset.cap;
+    url.innerHTML=url.querySelector('svg').outerHTML+'<b>dam.ronixtools.com</b>'+shots[i].dataset.url;
+  });});
+})();
+</script>
+</body>
+</html>
+
