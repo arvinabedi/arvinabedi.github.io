@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&family=Vazirmatn:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <script>
   (function(){
     var d=document.documentElement;
@@ -60,7 +60,6 @@ a{color:inherit}
 p{margin:0}
 h1,h2,h3,h4{margin:0; font-weight:800}
 img{max-width:100%; height:auto; display:block}
-.fa{font-family:Vazirmatn,Archivo,sans-serif}
 .slug{font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.72rem; letter-spacing:.04em; color:var(--mute)}
 .wrap{max-width:1360px; margin:0 auto; padding-inline:clamp(16px,4vw,56px)}
 :focus-visible{outline:2px solid var(--red); outline-offset:3px}
@@ -257,7 +256,6 @@ details.more[open]>summary::after{transform:rotate(45deg)}
 .index .yr{font-family:"IBM Plex Mono",monospace; font-size:.8rem; color:var(--mute); padding-top:10px}
 .index h4{font-variation-settings:"wdth" 75; font-size:clamp(1.7rem,3.4vw,2.8rem); line-height:1; transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 .index h4 a{text-decoration:none}
-.index h4 .fa{font-size:.6em; color:var(--mute); font-weight:500; margin-left:8px}
 .index p{margin-top:10px; color:var(--ink-2); max-width:62ch; font-size:.98rem}
 .index .go{margin-top:10px; font-size:.88rem; color:var(--mute)}
 .index .go a{color:var(--ink); font-weight:600}
@@ -268,7 +266,7 @@ details.more[open]>summary::after{transform:rotate(45deg)}
   .motion .index li .th,.motion .index li .swatch{display:none}
   .motion .index li:hover::before{transform:scaleY(1)}
   .motion .index li:hover{color:var(--paper)}
-  .motion .index li:hover p,.motion .index li:hover .go,.motion .index li:hover .yr,.motion .index li:hover .go a,.motion .index li:hover .fa{color:color-mix(in srgb,var(--paper) 78%,transparent)}
+  .motion .index li:hover p,.motion .index li:hover .go,.motion .index li:hover .yr,.motion .index li:hover .go a{color:color-mix(in srgb,var(--paper) 78%,transparent)}
   .motion .index li:hover h4{transform:translateX(18px)}
 }
 .peek{position:fixed; left:0; top:0; width:340px; aspect-ratio:16/10; z-index:30; pointer-events:none; overflow:hidden; opacity:0; transform:scale(.6); border:1px solid var(--rule-2); background:var(--paper-2); display:none}
@@ -359,7 +357,6 @@ html:not(.motion) .run .slug{position:static; display:block; margin-bottom:10px}
       <svg class="reg" id="reg" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="20" cy="20" r="5" fill="currentColor"/><path d="M20 2v36M2 20h36" stroke="currentColor" stroke-width="1.2"/></svg>
     </div>
     <p class="who"><b>Arvin Abedi</b><span>Product builder · builder-PM · design engineer</span><span>Open to relocating to the EU, UK, Canada or the Gulf</span></p>
-    <!-- TODO(human): the headline, in your own words. The three layers must say the same thing. -->
     <h1 class="ink" id="ink">
       <span class="layer k">I build the tools my team <em>was missing.</em></span>
       <span class="layer c" aria-hidden="true">I build the tools my team <em>was missing.</em></span>
@@ -564,7 +561,7 @@ html:not(.motion) .run .slug{position:static; display:block; margin-bottom:10px}
       <li id="pdms" data-peek="sw:#e1252d,#141414,#86817a,#e7e1d5,#f2eee6" data-cursor="Open">
         <span class="yr">2026</span>
         <div>
-          <h4><a href="https://github.com/arvinabedi/pdms" target="_blank" rel="noopener">PDMS</a><span class="fa" lang="fa" dir="rtl">گردش کار بسته‌بندی</span></h4>
+          <h4><a href="https://github.com/arvinabedi/pdms" target="_blank" rel="noopener">PDMS</a></h4>
           <p>The packaging team's order and approval system, in Persian. The commercial team files an order, the packaging lead assigns a designer, every draft is kept until approval and delivery, and the reports show how long the work really takes. The first version took two days.</p>
           <p class="go"><a href="https://github.com/arvinabedi/pdms" target="_blank" rel="noopener">Case study ↗</a></p>
         </div>
@@ -599,11 +596,11 @@ html:not(.motion) .run .slug{position:static; display:block; margin-bottom:10px}
       <li data-peek="assets/spectra-app.jpg">
         <span class="yr">2026</span>
         <div>
-          <h4>Spectra <span class="fa" lang="fa" dir="rtl">سامانه تعیین ساختار</span></h4>
+          <h4>Spectra</h4>
           <p>A side project: an offline tool for chemistry students that turns spectra into ranked candidate structures. 188 reference compounds, a practice mode that grades SMILES answers by computing them, and an Android build.</p>
           <p class="go">Demo on request</p>
         </div>
-        <span class="th"><img src="assets/spectra-app.jpg" alt="Spectra in Persian" loading="lazy" width="1400" height="875"></span>
+        <span class="th"><img src="assets/spectra-app.jpg" alt="Spectra" loading="lazy" width="1400" height="875"></span>
       </li>
       <li data-peek="assets/setayesh-site.jpg" data-cursor="Visit">
         <span class="yr">2026</span>
