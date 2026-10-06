@@ -6,6 +6,16 @@
 <title>Arvin Abedi</title>
 <meta name="description" content="Arvin Abedi, product builder. Turns a team's workflow problem into a shipped, adopted product: the Ronix Tool Hub and its eight tools, Content OS, a packaging workflow system, a distributor asset portal, a 193 TB archive re-architecture, and Jira pipeline analytics.">
 <meta name="color-scheme" content="dark light">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://arvinabedi.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://arvinabedi.github.io/">
+<meta property="og:title" content="Arvin Abedi, product builder">
+<meta property="og:description" content="Spec to deploy, solo, in weeks. Tool Hub and its eight tools, a distributor asset portal, a 193 TB archive re-plan, and the apps around them.">
+<meta property="og:image" content="https://arvinabedi.github.io/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Figtree:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Vazirmatn:wght@500&display=swap">
@@ -364,6 +374,18 @@ a.card:hover .go{color:var(--red)} a.card:hover .go svg{transform:translateX(3px
 @media (max-width:900px){ .about{grid-template-columns:1fr} }
 @media (max-width:480px){ .roles li{grid-template-columns:1fr; gap:4px} }
 
+.hero .acts{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px}
+.btn-p,.btn-g{display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-weight:600; font-size:.92rem; padding:12px 18px; border-radius:999px; transition:transform .2s,border-color .2s}
+.btn-p{background:var(--red); color:#fff} .btn-g{border:1px solid var(--line-2); color:var(--ink); background:var(--glass)}
+.btn-p:hover,.btn-g:hover{transform:translateY(-2px)}
+.btn-p svg,.btn-g svg{width:15px; height:15px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+.kicker .roles-k{color:var(--ink-2)}
+@media (max-width:520px){ .nav-cv{display:none} }
+@media (max-width:420px){ .nav{gap:8px; padding-left:14px} .nav .cta{padding:8px 12px; font-size:.8rem} .nav .brand{font-size:.92rem} }
+details.more>summary{list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:10px; font-weight:600; padding:12px 18px; border-radius:999px; border:1px solid var(--line-2); background:var(--glass)}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"+"; color:var(--red); font-family:"JetBrains Mono",monospace}
+details.more[open]>summary{margin-bottom:22px} details.more[open]>summary::after{content:"−"}
 footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; font-family:"JetBrains Mono",monospace; font-size:.7rem; color:var(--mute); letter-spacing:.06em; text-transform:uppercase}
 </style>
 </head>
@@ -379,6 +401,7 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
     <li><a href="#how">How I work</a></li>
     <li><a href="#about">About</a></li>
   </ul>
+  <a class="nav-cv" href="cv.pdf" download style="text-decoration:none;font-size:.86rem;color:var(--ink-2);padding:8px 10px;white-space:nowrap">CV</a>
   <a class="cta" href="mailto:abediartin@gmail.com">Get in touch</a>
   <button class="theme" id="themeToggle" type="button" aria-label="Switch colour theme">
     <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -390,14 +413,21 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
 
 <!-- ========== HERO ========== -->
 <header class="hero">
-  <p class="kicker"><b>Arvin Abedi</b> Product builder <span class="pill">Tehran → relocating · EU · UK · Canada · Gulf</span></p>
+  <p class="kicker"><b>Arvin Abedi</b> <span class="roles-k">Product builder · Builder-PM · Design engineer</span> <span class="pill">Open to relocation · EU · UK · Canada · Gulf</span></p>
   <h1 aria-label="Spec to deploy. Solo. In weeks.">
     <span class="ln"><span>Spec to deploy.</span></span>
     <span class="ln"><span class="solo">Solo.</span></span>
     <span class="ln"><span class="weeks">In weeks.</span></span>
   </h1>
   <div class="row">
+    <div>
     <p class="lede">I sit with a team, find the slow part of its week, and ship the product that removes it. At Ronix Tools that meant replacing a branding team's hand-made production work with <strong>eight tools I built and the platform that runs them</strong>, a content-quality dashboard and a packaging workflow system that sign in through it, shipping <strong>a distributor-facing asset portal</strong>, re-architecting <strong>a 193 TB archive</strong>, and reading <strong>29,000 Jira issues</strong> to find where the time actually went. Each one started as a problem, not a ticket, and each one runs on the company's own servers today.</p>
+    <div class="acts">
+      <a class="btn-p" href="#work">See the work <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+      <a class="btn-g" href="cv.pdf" download>Download CV <svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></a>
+      <a class="btn-g" href="mailto:abediartin@gmail.com">abediartin@gmail.com</a>
+    </div>
+    </div>
     <aside class="stats glass" aria-label="At a glance">
       <div class="stat hot"><span class="n">4</span><span class="k">internal apps in production behind one sign-in, with roles, HTTPS and auto-deploy</span></div>
       <div class="stat"><span class="n">8</span><span class="k">production tools built from scratch and shipped inside one platform</span></div>
@@ -418,7 +448,7 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
   <div class="sec">
     <span class="num">SELECTED WORK</span>
     <h2>Four problems, four products.</h2>
-    <p>Every one of these began with a team losing time. The brief, the design, the deployment and the documentation were mine on all four, and so was the code, except on the DAM, where I worked with one developer. The branding team and IT were the stakeholders.</p>
+    <p>Every one of these began with a team losing time. The brief, the design, the deployment and the documentation were mine on all four, and so was the code, except on the DAM and the Jira assistant, which I built with <a href="https://sammehrany.com" target="_blank" rel="noopener">Sam Mehrany</a>. The branding team and IT were the stakeholders.</p>
   </div>
 
   <div class="stack">
@@ -440,7 +470,7 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
         </div>
         <div class="links">
           <a class="lnk" href="https://github.com/arvinabedi/tool-hub" target="_blank" rel="noopener">Case study <span class="m">GITHUB</span><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-            <a class="lnk" href="#inside">Three details, closer look<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
+            <a class="lnk" href="#inside" onclick="document.getElementById('inside-more').open=true">Three details, closer look<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
         </div>
       </div>
       <div>
@@ -496,7 +526,7 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
     <article class="case glass" id="dam">
       <div>
         <p class="idx"><b>02</b> <span class="tag">Partner-facing product</span> <span>dam.ronixtools.com</span></p>
-        <h3>Distributors stopped emailing for photos.<small>Ronix DAM · 2026 · product, UX, partner-portal redesign and deployment, with one developer</small></h3>
+        <h3>Distributors stopped emailing for photos.<small>Ronix DAM · 2026 · product, UX, partner-portal redesign and deployment · built with <a href="https://sammehrany.com" target="_blank" rel="noopener">Sam Mehrany</a></small></h3>
         <div class="pbo">
           <div><b>Problem</b><span>Approved product photography, labels and manuals sat on a NAS two network hops deep. Every distributor request for a file became an email to the brand team, and nobody could say which version was the approved one.</span></div>
           <div><b>Built</b><span>A digital asset manager with <strong>five roles on one library</strong>. Staff upload, tag against a controlled taxonomy and approve; a distributor types a product code and downloads exactly the files their store needs. Self-hosted Supabase, CI with a self-hosted runner, atomic release switching.</span></div>
@@ -578,7 +608,7 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
     <article class="case glass" id="jira">
       <div>
         <p class="idx"><b>04</b> <span class="tag">Analytics + local LLM</span> <span>29,000 issues</span></p>
-        <h3>Found the 37% of time when nothing was happening.<small>Jira pipeline analytics · 2026 · Python, SQLite, Ollama</small></h3>
+        <h3>Found the 37% of time when nothing was happening.<small>Jira pipeline analytics · 2026 · Python, SQLite, Ollama · built with <a href="https://sammehrany.com" target="_blank" rel="noopener">Sam Mehrany</a></small></h3>
         <div class="pbo">
           <div><b>Problem</b><span>Managers asked "why are we late?" and Jira could not answer. Issues closed the same day; products still took months. Jira's own links were unused, so nothing connected one product's graphic, content, filming, packaging and publish steps.</span></div>
           <div><b>Found</b><span>41% of issue summaries carry a product code. Reconstructing each product's chain from that code showed <strong>a median 70 days per product, of which 25.8 days nobody had any issue open</strong>. The worst bottleneck was photography, the oldest unfinished step on 280 of 702 open products. Invisible in Jira, because it happens between tickets.</span></div>
@@ -625,6 +655,7 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
     <h2>Three details inside the Hub.</h2>
     <p>The parts of Tool Hub that took real engineering: a catalog tool that reads the website and refuses to print bad data, a deploy loop with no pipeline, and access that seals itself.</p>
   </div>
+  <details class="more" id="inside-more"><summary>Open the engineering details</summary>
   <div class="deep">
 
     <article class="feat glass">
@@ -701,6 +732,7 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
     </article>
 
   </div>
+  </details>
 </section>
 
 <!-- ========== ALSO BUILT ========== -->
@@ -791,17 +823,17 @@ footer{margin-top:70px; padding-top:22px; border-top:1px solid var(--line); disp
       <h2>Arvin Abedi</h2>
       <p class="bio">I came to product from language. A degree in English translation and three years teaching made me good at one thing above all: <strong>understanding what someone actually needs and saying it back clearly</strong>. At Ronix Tools that turned into briefs, then prototypes, then two production systems and a department's information architecture. Persian native, English professional, French beginner. Based in Tehran and ready to relocate.</p>
       <ul class="roles">
-        <li><span class="when">2024 — NOW</span><div><b>Ronix Tools · product builder, Branding department</b><span>Title on paper: AI Content Specialist. In practice the de facto product owner of the team's internal stack: Tool Hub, Content OS, PDMS, DAM, archive programme, design systems, Jira analytics.</span></div></li>
-        <li><span class="when">2023 — 2024</span><div><b>Ronix Tools · English content writer</b><span>Product and marketing copy for the international brand; custom GPTs and LLM workflows for translation, SEO and research.</span></div></li>
-        <li><span class="when">2020 — 2023</span><div><b>Nassir Language Institute · English instructor</b><span>Academic, professional and immigration-track learners.</span></div></li>
-        <li><span class="when">2019 — 2022</span><div><b>BA, English Translation</b><span>Qazvin International University.</span></div></li>
+        <li><span class="when">OCT 2024 — NOW</span><div><b>Ronix Tools · product builder, Branding department</b><span>Hired as AI Specialist; grew into owning the team's internal software, as de facto product owner of the team's internal stack: Tool Hub, Content OS, PDMS, DAM, archive programme, design systems, Jira analytics.</span></div></li>
+        <li><span class="when">JUL 2023 — OCT 2024</span><div><b>Ronix Tools · English content writer</b><span>Product and marketing copy for the international brand; custom GPTs and LLM workflows for translation, SEO and research.</span></div></li>
+        <li><span class="when">2021 — 2023</span><div><b>Nassir Language Institute · English instructor</b><span>Academic, professional and immigration-track learners.</span></div></li>
+        <li><span class="when">GRAD. 2024</span><div><b>BA, English Translation</b><span>Imam Khomeini International University, Qazvin.</span></div></li>
       </ul>
     </div>
     <div class="contact">
       <a href="mailto:abediartin@gmail.com"><span class="l">Email</span><span class="v">abediartin@gmail.com</span></a>
       <a href="https://www.linkedin.com/in/arvin-a-873394127/" target="_blank" rel="noopener"><span class="l">LinkedIn</span><span class="v">arvin-a-873394127</span></a>
       <a href="https://github.com/arvinabedi" target="_blank" rel="noopener"><span class="l">GitHub</span><span class="v">arvinabedi</span></a>
-      <a href="https://github.com/Ronix-Brand" target="_blank" rel="noopener"><span class="l">GitHub · work</span><span class="v">Ronix-Brand</span></a>
+      <a href="cv.pdf" download><span class="l">CV</span><span class="v">Download PDF</span></a>
       <p class="note">Open to forward-deployed product, builder-PM and design-engineering roles with relocation to the EU, UK, Canada or the Gulf.</p>
     </div>
   </article>
